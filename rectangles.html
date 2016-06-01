@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="myCanvas" width="500" height="500"></canvas>
+		
+    <script>
+      var canvas = document.getElementById('myCanvas');
+      var context = canvas.getContext('2d');			
+			var rectList = [];
+			const MARGIN = 5;
+			const START_X = 50;
+			const START_Y = 50;
+			const START_WIDTH = 300;
+			const START_HEIGHT = 200;
+			const NUMBER_OF_RECTANGLES = 10;
+			
+			rectList.push( { left: START_X, top: START_Y, width: START_WIDTH, height: START_HEIGHT } );
+			splitRandomly( rectList, NUMBER_OF_RECTANGLES - 1 );
+			//splitTest(rectList);
+			drawRectangles(rectList);
+			
+			function splitTest(rectList) {
+			  var newRect;
+				newRect = splitRectHorizontal(rectList[0], 150);
+				rectList.push(newRect);
+				newRect = splitRectVertical(rectList[1], 200);
+				rectList.push(newRect);
+			}
+			
+			function splitRandomly(rectList, numberOfSplits) {
+			  for (var i=0; i < numberOfSplits; i++) {
+					var splitIndex;
+					var x;
+					var y;
+					var newRect;
+					
+					// Pick a random point and find which rectangle it's in.
+					// Reject points that are too close to any of the current edges.
+					do {
+					  x = START_X + Math.floor(Math.random() * START_WIDTH);
+						y = START_Y + Math.floor(Math.random() * START_HEIGHT);
+						splitIndex = findRectIndexForPoint(rectList, x, y);
+					} while (splitIndex == -1);
+					
+					// Split the rectangle containing that point, and add new rectangle to list.
+					
+					// Version 1: completely random split
+					if (Math.random() < .5) {
+						newRect = splitRectHorizontal(rectList[splitIndex], y);
+					} else {
+						newRect = splitRectVertical(rectList[splitIndex], x);
+					}
+					
+					// Version 2: split along longest dimension
+					/*
+					if (rectList[splitIndex].height > rectList[splitIndex].width) {
+						newRect = splitRectHorizontal(rectList[splitIndex], y);
+					} else {
+						newRect = splitRectVertical(rectList[splitIndex], x);
+					}
+					*/
+					
+					rectList.push(newRect);
+				}
+			}
+			
+			function splitRectHorizontal(oldRect, ySplit) {
+				var newRect = {};
+				
+				newRect.left = oldRect.left;
+				newRect.width = oldRect.width;
+				newRect.top = ySplit;
+				newRect.height = oldRect.top + oldRect.height - ySplit;
+				oldRect.height -= newRect.height;
+				return newRect;
+			}
+			
+			function splitRectVertical(oldRect, xSplit) {
+				var newRect = {};
+				
+				newRect.top = oldRect.top;
+				newRect.height = oldRect.height;
+				newRect.left = xSplit;
+				newRect.width = oldRect.left + oldRect.width - xSplit;
+				oldRect.width -= newRect.width;
+				return newRect;
+			}
+			
+			// Search the list of rectangles. Return the index to the rectangle containing (x,y)
+			// with a bit of room to spare.
+			// If none of the rectangles contain i (because it's too close to a border or completely outside
+			// all of them) return -1.
+			function findRectIndexForPoint(rectList, x, y) {
+			  for (var i=0; i < rectList.length; i++) {
+				  if ((rectList[i].left + MARGIN < x) &&
+					         (rectList[i].top + MARGIN < y) &&
+							     (rectList[i].left + rectList[i].width - MARGIN >= x) &&
+							     (rectList[i].top + rectList[i].height - MARGIN >= y)) {
+						return i;
+					}
+				}
+				return -1;
+			}
+			
+			function storeRect(rectList, left, top, width, height) {
+			  rectList.push( { left: left, top: top, width: width, height: height } );
+			}
+			
+			function drawRectangles(rectList) {
+			  for (var i=0; i < rectList.length; i++) {
+					context.beginPath();
+				  context.rect(rectList[i].left, rectList[i].top, rectList[i].width, rectList[i].height);
+					context.fillStyle = getRandomColor();
+					context.fill();
+					context.lineWidth = 1;
+					context.strokeStyle = 'black';
+					context.stroke();
+				}
+			}
+			
+			function getRandomColor() {
+				var letters = '0123456789ABCDEF'.split('');
+				var color = '#';
+				for (var i = 0; i < 6; i++ ) {
+						color += letters[Math.floor(Math.random() * 16)];
+				}
+				return color;
+			}
+
+			
+			
+			
+    </script>
+		
+  </body>
+</html>  

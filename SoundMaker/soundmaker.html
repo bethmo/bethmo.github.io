@@ -1,0 +1,270 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>SoundMaker</title>
+    <script type="text/javascript" src="jquery-2.2.4.min.js"></script> <!-- NOTE: For web hosting, change this to load jQuery from standard web source! -->
+    <script type="text/javascript" src="soundmaker.js"></script>
+    <script type="text/javascript" src="sound.js"></script>
+
+    <style>
+        .floatInput {
+            width: 75px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h2>SoundMaker</h2>
+        Utility for use with <a href="https://github.com/kittykatattack/sound.js">sound.js</a> to create sounds.
+        When you're happy with a sound, copy the code snippet into your file.
+        Note: any sounds you save will last only until the web page refreshes!
+        <br /><br />
+        <div style="float:left">
+            <table>
+                <tr>
+                    <td>
+                        soundName
+                    </td>
+                    <td>
+                        <input type="text" id="soundName" class="floatInput"/>
+                    </td>
+                    <td>
+                        Label for sound buttons (not part of the sound)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        frequencyValue
+                    </td>
+                    <td>
+                        <input type="text" id="frequencyValue" class="floatInput" />
+                    </td>
+                    <td>
+                        The sound's fequency pitch in Hertz
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        attack
+                    </td>
+                    <td>
+                        <input type="text" id="attack" class="floatInput" />
+                    </td>
+                    <td>
+                        The time, in seconds, to fade the sound in
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        decay
+                    </td>
+                    <td>
+                        <input type="text" id="decay" class="floatInput" />
+                    </td>
+                    <td>
+                        The time, in seconds, to fade the sound out
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        waveform
+                    </td>
+                    <td>
+                        <select id="waveform">
+                            <option value="sine">sine</option>
+                            <option value="triangle">triangle</option>
+                            <option value="square">square</option>
+                            <option value="sawtooth">sawtooth</option>
+                        </select>
+                    </td>
+                    <td>
+                        waveform type: "sine", "triangle", "square", "sawtooth"
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        volumeValue
+                    </td>
+                    <td>
+                        <input type="text" id="volumeValue" class="floatInput" />
+                    </td>
+                    <td>
+                        The sound's maximum volume
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        panValue
+                    </td>
+                    <td>
+                        <input type="text" id="panValue" class="floatInput" />
+                    </td>
+                    <td>
+                        The speaker pan. left: -1, middle: 0, right: 1
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        wait
+                    </td>
+                    <td>
+                        <input type="text" id="wait" class="floatInput" />
+                    </td>
+                    <td>
+                        The time, in seconds, to wait before playing the sound
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        pitchBendAmount
+                    </td>
+                    <td>
+                        <input type="text" id="pitchBendAmount" class="floatInput" />
+                    </td>
+                    <td>
+                        The number of Hz in which to bend the sound's pitch down
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        reverse
+                    </td>
+                    <td>
+                        <select id="reverse">
+                            <option value="false">false</option>
+                            <option value="true">true</option>
+                        </select>
+                    </td>
+                    <td>
+                        If `reverse` is true the pitch will bend up
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        randomValue
+                    </td>
+                    <td>
+                        <input type="text" id="randomValue" class="floatInput" />
+                    </td>
+                    <td>
+                        A range, in Hz, within which to randomize the pitch
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        dissonance
+                    </td>
+                    <td>
+                        <input type="text" id="dissonance" class="floatInput" />
+                    </td>
+                    <td>
+                        A value in Hz. It creates 2 dissonant frequencies above and below the target pitch
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        echoDelayTime
+                    </td>
+                    <td>
+                        <input type="text" id="echoDelayTime" class="floatInput" />
+                    </td>
+                    <td>
+                        echo delay time in seconds
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        echoFeedbackTime
+                    </td>
+                    <td>
+                        <input type="text" id="echoFeedbackTime" class="floatInput" />
+                    </td>
+                    <td>
+                        echo feedback time in seconds
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        echoFilter
+                    </td>
+                    <td>
+                        <input type="text" id="echoFilter" class="floatInput" />
+                    </td>
+                    <td>
+                        echo filter value in Hz
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        reverbDuration
+                    </td>
+                    <td>
+                        <input type="text" id="reverbDuration" class="floatInput" />
+                    </td>
+                    <td>
+                        reverb duration in seconds
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        reverbDecayRate
+                    </td>
+                    <td>
+                        <input type="text" id="reverbDecayRate" class="floatInput" />
+                    </td>
+                    <td>
+                        reverb decay rate in seconds
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        reverbReverse
+                    </td>
+                    <td>
+                        <select id="reverbReverse">
+                            <option value="false">false</option>
+                            <option value="true">true</option>
+                        </select>
+                    </td>
+                    <td>
+                        If `reverse` is true the reverb pitch will bend up
+                    </td>
+                </tr>
+                <!--
+            <tr>
+                <td>
+                    timeout
+                </td>
+                <td>
+                    <input type="text" id="timeout" />
+                </td>
+                <td>
+                    A number, in seconds, which is the maximum duration for sound effects
+                </td>
+            </tr>
+                -->
+            </table>
+        </div>
+        <div style="float:left">
+            Saved sounds.  (The initial ones came with the sounds.js demo.)
+            <table>
+                <tbody id="playButtons">
+                    <tr id="buttonRowTemplate" style="display:none">
+                        <td class="buttonRowLabel"></td>
+                        <td><button class="playButton">Play</button></td>
+                        <td><button class="retrieveButton">Retrieve</button></td>
+                        <td><button class="deleteButtonRow">Delete</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="clear:both"></div>
+        <button id="playSound">Play</button>
+        <button id="saveSound">Save</button>
+        <br />
+        <textarea id="codeArea" rows="20" cols="100" style="border: 1px solid black"></textarea>
+    </div>
+</body>
+</html>
