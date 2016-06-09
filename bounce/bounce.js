@@ -106,9 +106,12 @@ function setUpEventHandlers() {
         movingRight = false;
     });
 
-    leftArrow.on("touchstart", function () { movingLeft = true; });
-    leftArrow.on("touchend", function () { movingLeft = false; });
-    rightArrow.on("touchstart", function () { movingRight = true; });
+    // On the iPad (but not on the iPad emulator!), when I hold down the arrows to move,
+    // a context menu allowing saving the image is popping up.  Stack Overflow suggests
+    // adding e.preventDefault() to the touchstart and also some webkit css
+    leftArrow.on("touchstart", function (e) { e.preventDefault(); movingLeft = true; });
+    leftArrow.on("touchend", function (e) { movingLeft = false; });
+    rightArrow.on("touchstart", function () { e.preventDefault(); movingRight = true; });
     rightArrow.on("touchend", function () { movingRight = false; });
 }
 
