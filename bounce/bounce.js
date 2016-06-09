@@ -5,9 +5,9 @@ const gameWidth = 500;
 const gameHeight = 400;
 const wallSize = 2;
 const ballRadius = 5;
-const paddleWidth = 60;
+const paddleWidth = 80;
 const paddleHeight = 2;
-const paddleSpeed = 5;
+const paddleSpeed = 7;
 const startingBallSpeed = 5;
 
 // Key codes
@@ -58,8 +58,8 @@ function drainSound() {
 
 var context;
 var balls = [];
-var leftKeyDown = false;
-var rightKeyDown = false;
+var movingLeft = false;
+var movingRight = false;
 var paused = false;
 
 
@@ -76,22 +76,50 @@ $(document).ready(function () {
     canvas.height = gameHeight;
     context = canvas.getContext('2d');
 
-    $(document).keydown(keyDownHandler);
-    $(document).keyup(keyUpHandler);
-
+    setUpEventHandlers();
+    
     (function animloop() {
         requestAnimFrame(animloop);
         update();
     })();
 });
 
+function setUpEventHandlers() {
+    $(document).keydown(keyDownHandler);
+    $(document).keyup(keyUpHandler);
+
+    // Click works for both mouse and touchscreen
+    $("#myCanvas").click(launchBall);
+    $("#bounce").click(togglePause);
+
+    // Buttons that stay active as long as you're holding down/touching them seem
+    // to need to be handled separately for mouse and touch versions
+    var leftArrow = $("#leftArrow");
+    var rightArrow = $("#rightArrow");
+
+    // Warning: without the return false from the mousedown events, moving the mouse while 
+    // holding down the button visually drags the arrow around the screen!
+    leftArrow.mousedown(function () { movingLeft = true; return false; });
+    rightArrow.mousedown(function () { movingRight = true; return false; });
+    $(document).mouseup(function () {
+        movingLeft = false;
+        movingRight = false;
+    });
+
+    leftArrow.on("touchstart", function () { movingLeft = true; });
+    leftArrow.on("touchend", function () { movingLeft = false; });
+    rightArrow.on("touchstart", function () { movingRight = true; });
+    rightArrow.on("touchend", function () { movingRight = false; });
+}
+
+
 function keyDownHandler() {
     switch (event.keyCode) {
         case LEFT_ARROW:
-            leftKeyDown = true;
+            movingLeft = true;
             break;
         case RIGHT_ARROW:
-            rightKeyDown = true;
+            movingRight = true;
             break;
         case ESC:
             togglePause();
@@ -104,10 +132,10 @@ function keyDownHandler() {
 function keyUpHandler() {
     switch (event.keyCode) {
         case LEFT_ARROW:
-            leftKeyDown = false;
+            movingLeft = false;
             break;
         case RIGHT_ARROW:
-            rightKeyDown = false;
+            movingRight = false;
             break;
     }
 }
@@ -188,12 +216,12 @@ var paddle = {
         drawRectWithBorder(this.x, this.y, this.width, this.height, "black");
     },
     move: function () {
-        if (leftKeyDown && rightKeyDown) {
+        if (movingLeft && movingRight) {
             return;
         }
-        if (leftKeyDown) {
+        if (movingLeft) {
             this.x = Math.max(0, this.x - paddleSpeed);
-        } else if (rightKeyDown) {
+        } else if (movingRight) {
             this.x = Math.min(gameWidth - paddleWidth, this.x + paddleSpeed);
         }
     }

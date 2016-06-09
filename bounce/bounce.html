@@ -10,16 +10,41 @@
     <script type="text/javascript" src="sound.js"></script>
 </head>
 <body>
-    <div style="text-align:center">
-        <div style="font-size: 40px; font-weight: bold">Bounce!</div>
+    <div style="text-align:center; cursor: default;">
+        <div style="font-size: 40px; font-weight: bold" id="bounce">Bounce!</div>
         <div style="font-weight: bold">How many balls can you keep in the air at once?</div>
         <br />
         <div>
-            Press spacebar to launch a ball.<br />
-            Left and right arrow keys move the paddle.<br />
-            Esc to pause/unpause.
+            Press spacebar to launch a ball, left and right arrow keys move the paddle.<br />
+            Or touch playfield to launch, hold blue arrows to move paddle.<br />
+            Esc or click "Bounce!" to pause/unpause.<br />
         </div>
     </div>
-    <canvas id="myCanvas" style="display: block; margin: 0 auto"></canvas>
+    <div align="center">
+        <canvas id="myCanvas" ></canvas>
+    </div>
+    <div align="center">
+        <img id="leftArrow" src="blue_left_arrow.png" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <img id="rightArrow" src="blue_right_arrow.png" />
+    </div>
+    <!--
+    <div align="center">
+        <label>Ball speed:
+            <select id="ballSpeed" class="setting">
+                <option value="3">Slow</option>
+                <option value="5" selected="selected">Medium</option>
+                <option value="7">Fast</option>
+            </select>
+        </label>
+        <label>
+            Paddle speed:
+            <select id="paddleSpeed" class="setting">
+                <option value="3">Slow</option>
+                <option value="5" selected="selected">Medium</option>
+                <option value="7">Fast</option>
+            </select>
+        </label>
+    </div>
+    -->
 </body>
 </html>
