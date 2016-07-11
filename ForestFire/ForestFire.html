@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>ForestFire</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <!--<script type="text/javascript" src="jquery-2.2.4.min.js"></script>-->
+
+    <script type="text/javascript" src="keycodes.js"></script>
+    <script type="text/javascript" src="sound.js"></script>
+    <script type="text/javascript" src="ForestFire.js"></script>
+
+    <style>
+        .roundCornerButton {
+          -moz-border-radius: 15px;
+          -webkit-border-radius: 15px;
+          border: 5px solid;
+          padding: 5px;
+        }
+
+        .largeButton {
+            background-color: LawnGreen;
+            border-color:  DarkGreen;
+            min-width: 150px;
+            min-height: 30px;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .startScreenButton {
+            background-color: SkyBlue;
+            border-color: darkblue;
+        }
+
+        #pauseButton {
+            background-color: SkyBlue;
+            border-color: darkblue;
+        }
+
+        .soundToggle {
+            margin: 0;
+            padding: 0;
+        }
+        .rulesText {
+            font-size: 30px;
+        }
+
+        .soundImage {
+            width: 30px;
+            height: 30px;
+        }
+
+        #timeDisplay {
+            font-size: 40px;
+            font-weight: bold;
+            color: red;
+        }
+        #timeDisplay.ending {
+            color: white;
+            background-color: red;
+        }
+
+        #finalScore {
+             font-size: 40px;
+             font-weight: bold;
+             color: red;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="startScreen" style="position: relative">
+        <img src="resources/startScreen.png" />
+        <button id="instructionsButton" class="roundCornerButton largeButton startScreenButton" style="position: absolute; bottom: 10px; left: 400px;">How to Play</button>
+        <button id="startGame" class="roundCornerButton largeButton startScreenButton"style="position: absolute; bottom: 10px; left: 600px;">Start Game</button>
+        <div id="pleaseWait" style="position: absolute; bottom: 10px; left: 600px; color: white; font-size: 30px;">Loading, please wait...</div>
+        <button class="soundToggle" style="position: absolute; left: 10px; top: 10px;">
+            <img class="mute soundImage" src="Mute_Icon.svg" alt="Mute sound">
+            <img class="unmute soundImage" src="Speaker_Icon.svg" alt="Unmute sound">
+        </button>
+    </div>
+    <div id="rulesScreen" class="rulesText">
+        Welcome to ForestFire!<br /><br />
+        You have three minutes to try to save as much of the forest as possible. <br />
+        Your copter carries a limited amount of water.  You can refill your tank at the lake (bottom left corner).<br />
+        Use arrow keys or keypad to move the copter.  Hold shift while flying for faster movement.<br />
+        Press spacebar to drop water, or to fill up watertank when over lake.<br />
+        ESC will pause or unpause.<br />
+        <br />
+        Fires will start randomly, and spread if not put out.  Fires will eventually burn out when they've destroyed all the trees in a patch.<br />
+        <button id="exitRulesScreen" class="roundCornerButton largeButton">Done</button>
+    </div>
+    <div id="mainScreen">
+        <div style="float:left">
+            <canvas id="myCanvas"></canvas>
+        </div>
+        <div style="float:left; margin-left: 10px;">
+            <div id="gameMinimapHolder">
+                <canvas id="minimapCanvas" style="border: 1px solid black;"></canvas>
+            </div>
+            <br />
+            <div id="waterTankDisplay" style="margin-top: 20px">
+                <span style="font-weight:bold">Water Tank</span>
+                <div style="position: relative; height: 100px; width: 60px; border: 2px solid black;margin-left: 20px;">
+                    <div id="waterTankFillGraphic" style="position: absolute; bottom: 0; height: 100%; width: 100%; background-color: blue;"></div>
+                </div>
+            </div>
+            <div id="score" style="margin-top: 20px">
+                Fires Doused: <span id="doused"></span>
+                <br />
+                Areas Burnt: <span id="burnt"></span>
+                <div id="timeDisplay" class=""></div>
+            </div>
+            <div style="margin-top:50px;">
+                <button id="pauseButton" class="roundCornerButton largeButton" style="margin-bottom: 10px;">Pause</button>
+                <br />
+                <button class="soundToggle">
+                    <img class="mute soundImage" src="Mute_Icon.svg" alt="Mute sound">
+                    <img class="unmute soundImage"src="Speaker_Icon.svg" alt="Unmute sound">
+                </button>
+            </div>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+    <div id="endScreen" style="position: relative">
+        <img src="resources/gameOver.png" />
+        <div id="endMinimapHolder" style="position: absolute; top: 200px; left:40px;">
+        </div>
+        <div id="finalScore" style="position: absolute; top: 150px; left: 40px;">
+
+        </div>
+        <button id="restartGame" class="roundCornerButton largeButton startScreenButton" style="position: absolute; bottom: 10px; left: 600px;">Play Again</button>
+    </div>
+</body>
+</html>

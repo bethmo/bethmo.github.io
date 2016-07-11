@@ -1,0 +1,18 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{146990D8-338B-47CC-9083-3B90320F6D4B}"
+	ProjectSection(SolutionItems) = preProject
+		ForestFire.html = ForestFire.html
+		ForestFire.js = ForestFire.js
+		keycodes.js = keycodes.js
+		sound.js = sound.js
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
