@@ -62,7 +62,7 @@ var beepedAtSeconds = 0;
 const SPLASH_SOUND = "resources/water-splash-3.mp3";
 const COPTER_SOUND = "resources/lawn-mower-trimmed.mp3";
 const LOAD_WATER_SOUND = "resources/water.mp3";
-const OUT_OF_WATER_SOUND = "resources/slurping.mp3";
+const OUT_OF_WATER_SOUND = "resources/slurp.mp3";
 
 window.requestAnimFrame = (function () {
     return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame ||
