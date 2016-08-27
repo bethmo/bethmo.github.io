@@ -580,7 +580,7 @@ function startRandomFire() {
     // TODO: Most of the forest is either on fire or burned out.  This is probably a good spot to end the game!
 }
 
-function keyDownHandler() {
+function keyDownHandler(event) {
     keysDown[event.keyCode] = true;
     // Add code here for things that trigger on keypress
     switch (event.keyCode) {
@@ -593,7 +593,7 @@ function keyDownHandler() {
     }
 }
 
-function keyUpHandler() {
+function keyUpHandler(event) {
     keysDown[event.keyCode] = false;
 }
 
